@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-frontend
+  labels:
+    app: todo-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-frontend
+  template:
+    metadata:
+      labels:
+        app: todo-frontend
+    spec:
+      containers:
+        - name: todo-frontend
+          image: "${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
+          ports:
+            - containerPort: 80
+          env:
+            - name: REACT_APP_API_URL
+              value: /api/todos
+
